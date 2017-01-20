@@ -1,11 +1,11 @@
 # uvaicpc
 Resources for CS 4993 @UVa
 
-Online Judge
+Problem Sets
 ------------
-- Kattis 
-- CodeForce
-- POJ
+- [HDU](http://acm.hdu.edu.cn/) and [POJ](http://poj.org) [solution1](https://github.com/EnigmaHuang/ACM-ICPC-Algorithm)
+<!-- - Kattis 
+- CodeForce -->
 
  
 Solutions
