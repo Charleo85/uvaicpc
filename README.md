@@ -4,8 +4,8 @@ Resources for CS 4993 @UVa
 Problem Sets
 ------------
 - [HDU](http://acm.hdu.edu.cn/) and [POJ](http://poj.org) [solution1](https://github.com/EnigmaHuang/ACM-ICPC-Algorithm)
-<!-- - Kattis 
-- CodeForce -->
+- Kattis 
+- CodeForce
 
  
 Solutions
