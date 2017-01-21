@@ -3,6 +3,7 @@ Resources for CS 4993 @UVa
 
 Problem Sets
 ------------
+- UVa online judge [world final problems](https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&category=45)
 - [HDU](http://acm.hdu.edu.cn/) and [POJ](http://poj.org) ([solution1](https://github.com/EnigmaHuang/ACM-ICPC-Algorithm))
 - [Kattis](https://open.kattis.com) 
 - [CodeForces](http://codeforces.com)
