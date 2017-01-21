@@ -13,7 +13,7 @@ Solutions
 
 Acknowledge
 ---------
-Thanks Professor Mark Floryan for supports on this independent study.
+Thanks to Professor Mark Floryan for supports on this independent study.
 
 Resources
 ---------
