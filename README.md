@@ -8,9 +8,16 @@ Problem Sets
 - [Kattis](https://open.kattis.com) 
 - [CodeForces](http://codeforces.com)
 
- 
 Solutions
 ---------
+~~~~
+python generate_html.py //To Generate PDF *requires latexmk
+python generate_html.py //To Generate HTML *requires enscript
+~~~~
+
+
+- World Final
+  - 2004 
 
 Acknowledge
 ---------
