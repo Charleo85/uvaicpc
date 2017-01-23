@@ -1,5 +1,3 @@
-// author: Tong Qiu (tq7bw@virginia.edu)
-
 #include <stdio.h>
 #include <vector>
 #include <stdlib.h>

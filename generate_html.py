@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import subprocess
-code_dir = "code"
+import os
+code_dir = os.getcwd()+"/code"
 title = "UVa ACM-ICPC Notebook"
 
 def add_toc(html, sections):
@@ -43,6 +44,8 @@ def get_sections():
                 if subsection_name is None:
                     raise ValueError('Subsection given without section')
                 subsections.append((filename, subsection_name))
+
+        # print(sections)
     return sections
 
 def get_html_enscript(sections):
@@ -51,6 +54,7 @@ def get_html_enscript(sections):
     for (_, subsections) in sections:
         filenames += [code_dir + '/' + filename for (filename, _) in subsections]
         print(enscript_options + filenames)
+    print(filenames)
     bstr = subprocess.check_output(enscript_options + filenames)
     return bstr.decode('utf-8')
 

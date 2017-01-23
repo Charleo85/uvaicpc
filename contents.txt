@@ -4,4 +4,10 @@
 #   [filename within code directory][tab character \t][subsection title]
 
 [World Final 2004]
-WorldFinal/2004/Tree-lined_street.cpp	2004 Tree-lined_street
+WorldFinal/2004/image_is_everything.cpp	C. Image is Everything
+WorldFinal/2004/intersecting_dates.cpp	E. Intersecting Dates
+WorldFinal/2004/Tree-lined_street.cpp	H. Tree-lined Street
+
+[World Final 2005]
+
+[]

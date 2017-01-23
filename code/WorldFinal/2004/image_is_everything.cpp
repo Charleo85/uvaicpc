@@ -1,4 +1,3 @@
-// author: Charlie Wu (jw7jb@virginia.edu)
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -11,7 +10,7 @@ using namespace std;
      |6|
 */
 
-const int MaxN=11; // at most size of 10, but use 11 to avoid seeing the additional side  
+const int MaxN=11; // at most size of 10, but use 11 to avoid seeing the additional side
 char f[6][MaxN][MaxN]; // color view read from data: [6]each view [][] square matrix
 int p[6][MaxN][MaxN];  // number of cubic(s) removed: [6]each view [][] square matrix
 int g[MaxN][MaxN][MaxN]; // 3D matrix: 0 as not exist, -1 no info yet, char A-Z (1-27) as color
