@@ -6,7 +6,7 @@
 [World Final 2004]
 2004/image_is_everything.cpp	C. Image is Everything
 2004/intersecting_dates.cpp	E. Intersecting Dates
-2004/Tree-lined_street.cpp	H. Tree-lined Street
+2004/tree_lined_street.cpp	H. Tree-lined Street
 
 [World Final 2005]
 
