@@ -34,6 +34,7 @@
 *.aux
 *.fls
 *.fdb_latexmk
+*.texpadtmp
 
 # Mac dir
 *.DS_Store
