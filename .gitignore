@@ -27,3 +27,13 @@
 *.exe
 *.out
 *.app
+
+# LaTex
+*.log
+*.toc
+*.aux
+*.fls
+*.fdb_latexmk
+
+# Mac dir
+*.DS_Store
