@@ -11,19 +11,21 @@ Problem Sets
 Solutions
 ---------
 ~~~~
-python generate_html.py //To Generate PDF *requires latexmk
+python generate_pdf.py //To Generate PDF *requires latexmk
 python generate_html.py //To Generate HTML *requires enscript
 ~~~~
 
 
 - World Final
   - 2004 
+  - 2005 
+  - 2006 
 
 Acknowledge
 ---------
 Thanks to Professor Mark Floryan and Professor Aaron Bloomfield for supports on this independent study.
 
-Also, special thanks to Wang Jiande and Wu Yonghui. Some of the thoughts in this repo are based on their book [2004~2011-ACM-ICPC Test question analysis for world final](https://www.amazon.com/2004~2011-ACM-ICPC-question-analysis-world-Chinese/dp/7111390946/ref=sr_1_1?s=books&ie=UTF8&qid=1486755194&sr=1-1&keywords=9787111390947)
+Also, special thanks to Wang Jiande and Wu Yonghui. Many of the solutions in this repo are based on their book [2004~2011-ACM-ICPC Test question analysis for world final](https://www.amazon.com/2004~2011-ACM-ICPC-question-analysis-world-Chinese/dp/7111390946/ref=sr_1_1?s=books&ie=UTF8&qid=1486755194&sr=1-1&keywords=9787111390947)
 
 Resources
 ---------
