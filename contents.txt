@@ -4,10 +4,39 @@
 #   [filename within code directory][tab character \t][subsection title]
 
 [World Final 2004]
+2004/carl_the_ant.cpp	A. Carl the Ant
+2004/heliport.cpp	B. Heliport
 2004/image_is_everything.cpp	C. Image is Everything
+2004/insecure_in_prague.cpp	D. Insecure in Prague
 2004/intersecting_dates.cpp	E. Intersecting Dates
+2004/merging_maps.cpp	F. Merging Maps
+2004/navigation.cpp	G. Navigation
 2004/tree_lined_street.cpp	H. Tree-lined Street
+2004/suspense.cpp	I. Suspense!
+2004/air_traffic_control.cpp	J. Air Traffic Control
 
 [World Final 2005]
+2005/eyeball_benders.cpp	A. Eyeball Benders
+2005/simplified_gsm_network.cpp	B. Simplified GSM Network
+2005/the_traveling_judges_problem.cpp	C. The Traveling Judges Problem
+2005/c_nte_sahru_pfefrlefe.cpp	D. cNteSahruPfefrlefe
+2005/lots_of_sunlight.cpp	E. Lots of Sunlight
+2005/crossing_streets.cpp	F. Crossing Streets
+2005/tiling_the_plane.cpp	G. Tiling the Plane
+2005/the_great_wall_game.cpp	H. The Great Wall Game
+2005/workshops.cpp	I. Workshops
+2005/zones.cpp	J. Zones
+
+[World Final 2005]
+2006/low_cost_air_travel.cpp	A. Low Cost Air Travel
+2006/remember_the_a_la_made.cpp	B. Remember the A La Mode!
+2006/ars_longa.cpp	C. Ars Longa
+2006/bipartite_numbers.cpp	D. Bipartite Numbers
+2006/bit_compressor.cpp	E. Bit Compressor
+2006/building_a_clock.cpp	F. Building a Clock
+2006/pilgrimage.cpp	G. Pilgrimage
+2006/pockets.cpp	H. Pockets
+2006/degree_of_separation.cpp	I. Degrees of Separation
+2006/routing.cpp	J. Routing
 
 []

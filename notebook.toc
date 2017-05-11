@@ -1,0 +1,33 @@
+\contentsline {section}{\numberline {1}World Final 2004}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}A. Carl the Ant}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}B. Heliport}{2}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}C. Image is Everything}{3}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}D. Insecure in Prague}{3}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}E. Intersecting Dates}{4}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}F. Merging Maps}{5}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}G. Navigation}{6}{subsection.1.7}
+\contentsline {subsection}{\numberline {1.8}H. Tree-lined Street}{7}{subsection.1.8}
+\contentsline {subsection}{\numberline {1.9}I. Suspense!}{7}{subsection.1.9}
+\contentsline {subsection}{\numberline {1.10}J. Air Traffic Control}{8}{subsection.1.10}
+\contentsline {section}{\numberline {2}World Final 2005}{9}{section.2}
+\contentsline {subsection}{\numberline {2.1}A. Eyeball Benders}{9}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}B. Simplified GSM Network}{10}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}C. The Traveling Judges Problem}{11}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}D. cNteSahruPfefrlefe}{11}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}E. Lots of Sunlight}{12}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}F. Crossing Streets}{13}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}G. Tiling the Plane}{13}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}H. The Great Wall Game}{14}{subsection.2.8}
+\contentsline {subsection}{\numberline {2.9}I. Workshops}{15}{subsection.2.9}
+\contentsline {subsection}{\numberline {2.10}J. Zones}{15}{subsection.2.10}
+\contentsline {section}{\numberline {3}World Final 2005}{16}{section.3}
+\contentsline {subsection}{\numberline {3.1}A. Low Cost Air Travel}{16}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}B. Remember the A La Mode!}{16}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}C. Ars Longa}{17}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}D. Bipartite Numbers}{18}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}E. Bit Compressor}{18}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}F. Building a Clock}{19}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}G. Pilgrimage}{19}{subsection.3.7}
+\contentsline {subsection}{\numberline {3.8}H. Pockets}{20}{subsection.3.8}
+\contentsline {subsection}{\numberline {3.9}I. Degrees of Separation}{21}{subsection.3.9}
+\contentsline {subsection}{\numberline {3.10}J. Routing}{21}{subsection.3.10}

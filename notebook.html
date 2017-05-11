@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD>
+<TITLE>UVa ACM-ICPC Notebook</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#1F00FF" ALINK="#FF0000" VLINK="#9900DD">
+<A NAME="top">
+<CENTER><H1><U>UVa ACM-ICPC Notebook</U></H1></CENTER>
+<H1>Table of Contents</H1>
+<H2>World Final 2004</H2>
+
+<OL START=1>
+<LI><A HREF="#file1">C. Image is Everything</A></LI>
+<LI><A HREF="#file2">E. Intersecting Dates</A></LI>
+<LI><A HREF="#file3">H. Tree-lined Street</A></LI>
+</OL>
+<HR>
+<A NAME="file1">
+<H1>/Users/wujibang/Developer/Algorithm/uvaicpc/code/WorldFinal/2004/image_is_everything.cpp 1/3</H1>
+[<A HREF="#top">top</A>][prev][<A HREF="#file2">next</A>]
+<PRE>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;cstdio&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;cstring&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;iostream&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;algorithm&gt;</FONT></B>
+using namespace std;
+
+<I><FONT COLOR="#B22222">/*    to fold
+5|          front, left, back, right, top, bottom
+2|1|4|3|      1     2     3     4      5     6
+     |6|
+*/</FONT></I>
+
+<B><FONT COLOR="#228B22">const</FONT></B> <B><FONT COLOR="#228B22">int</FONT></B> MaxN=11; <I><FONT COLOR="#B22222">// at most size of 10, but use 11 to avoid seeing the additional side
+</FONT></I><B><FONT COLOR="#228B22">char</FONT></B> f[6][MaxN][MaxN]; <I><FONT COLOR="#B22222">// color view read from data: [6]each view [][] square matrix
+</FONT></I><B><FONT COLOR="#228B22">int</FONT></B> p[6][MaxN][MaxN];  <I><FONT COLOR="#B22222">// number of cubic(s) removed: [6]each view [][] square matrix
+</FONT></I><B><FONT COLOR="#228B22">int</FONT></B> g[MaxN][MaxN][MaxN]; <I><FONT COLOR="#B22222">// 3D matrix: 0 as not exist, -1 no info yet, char A-Z (1-27) as color
+</FONT></I><B><FONT COLOR="#228B22">int</FONT></B> n; <I><FONT COLOR="#B22222">//cubic size
+</FONT></I>
+<B><FONT COLOR="#228B22">bool</FONT></B> <B><FONT COLOR="#0000FF">update</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> m) {
+   <B><FONT COLOR="#228B22">bool</FONT></B> upd=false;
+   <B><FONT COLOR="#A020F0">for</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> i=0; i&lt;n; ++i) <B><FONT COLOR="#A020F0">for</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> j=0; j&lt;n; ++j){ <I><FONT COLOR="#B22222">//analyze each pixel in current view
+</FONT></I>      <B><FONT COLOR="#228B22">int</FONT></B> &amp;t=p[m][i][j]; <I><FONT COLOR="#B22222">//the number of cubic removed at this pixel
+</FONT></I>      <B><FONT COLOR="#228B22">char</FONT></B> ch=f[m][i][j]; <I><FONT COLOR="#B22222">//the color at this pixel in the original view
+</FONT></I>      <B><FONT COLOR="#A020F0">if</FONT></B>(t==n) <B><FONT COLOR="#A020F0">continue</FONT></B>; <I><FONT COLOR="#B22222">//already removed all cubics at this pixel
+</FONT></I>      <B><FONT COLOR="#228B22">int</FONT></B> *val; <I><FONT COLOR="#B22222">//value of actual cubic at this pixel to analyze
+</FONT></I>      <B><FONT COLOR="#A020F0">switch</FONT></B> (m) {
+          <B><FONT COLOR="#A020F0">case</FONT></B> <B><FONT COLOR="#5F9EA0">0</FONT></B>: <I><FONT COLOR="#B22222">// front
+</FONT></I>            val = &amp;(g[n-t-1][j][i]);
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+          <B><FONT COLOR="#A020F0">case</FONT></B> <B><FONT COLOR="#5F9EA0">1</FONT></B>: <I><FONT COLOR="#B22222">// left
+</FONT></I>            val = &amp;(g[j][t][i]);
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+          <B><FONT COLOR="#A020F0">case</FONT></B> <B><FONT COLOR="#5F9EA0">2</FONT></B>: <I><FONT COLOR="#B22222">// back
+</FONT></I>            val = &amp;(g[t][n-j-1][i]);
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+          <B><FONT COLOR="#A020F0">case</FONT></B> <B><FONT COLOR="#5F9EA0">3</FONT></B>: <I><FONT COLOR="#B22222">// right
+</FONT></I>            val = &amp;(g[n-j-1][n-t-1][i]);
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+          <B><FONT COLOR="#A020F0">case</FONT></B> <B><FONT COLOR="#5F9EA0">4</FONT></B>: <I><FONT COLOR="#B22222">// top
+</FONT></I>            val = &amp;(g[i][j][t]);
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+          <B><FONT COLOR="#A020F0">case</FONT></B> <B><FONT COLOR="#5F9EA0">5</FONT></B>: <I><FONT COLOR="#B22222">// bottom
+</FONT></I>            val = &amp;(g[n-i-1][j][n-t-1]);
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+          <B><FONT COLOR="#5F9EA0">default</FONT></B>:
+            <B><FONT COLOR="#A020F0">break</FONT></B>;
+      }
+      <B><FONT COLOR="#A020F0">if</FONT></B> (*val==0){ ++t; upd=true;}
+        <I><FONT COLOR="#B22222">//the cubic here does not exist
+</FONT></I>      <B><FONT COLOR="#A020F0">else</FONT></B> <B><FONT COLOR="#A020F0">if</FONT></B>(ch==<B><FONT COLOR="#BC8F8F">'.'</FONT></B>){ *val=0; ++t; upd=true; }
+        <I><FONT COLOR="#B22222">//update the cubic here as not exist
+</FONT></I>      <B><FONT COLOR="#A020F0">else</FONT></B> <B><FONT COLOR="#A020F0">if</FONT></B>(*val==-1){ *val=ch-<B><FONT COLOR="#BC8F8F">'A'</FONT></B>+1; upd=true;}
+        <I><FONT COLOR="#B22222">//if the cubic color is not analzed, use the color on the other side
+</FONT></I>      <B><FONT COLOR="#A020F0">else</FONT></B> <B><FONT COLOR="#A020F0">if</FONT></B>(*val!=ch-<B><FONT COLOR="#BC8F8F">'A'</FONT></B>+1){ *val=0; ++t; upd=true; }
+        <I><FONT COLOR="#B22222">//if different from the cubic color from the other side, update the cubic here as not exist,
+</FONT></I>   }
+   <B><FONT COLOR="#A020F0">return</FONT></B> upd;
+}
+
+<B><FONT COLOR="#228B22">int</FONT></B> <B><FONT COLOR="#0000FF">main</FONT></B>() {
+  <B><FONT COLOR="#A020F0">while</FONT></B>(true) {
+    scanf(<B><FONT COLOR="#BC8F8F">&quot;%d&quot;</FONT></B>, &amp;n); <I><FONT COLOR="#B22222">// read size of cubic
+</FONT></I>    <B><FONT COLOR="#A020F0">if</FONT></B> (n==0) <B><FONT COLOR="#A020F0">break</FONT></B>;
+    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i=0; i&lt;n; ++i) scanf(<B><FONT COLOR="#BC8F8F">&quot; %s %s %s %s %s %s&quot;</FONT></B>, f[0][i], f[1][i], f[2][i], f[3][i], f[4][i], f[5][i]); <I><FONT COLOR="#B22222">// read view
+</FONT></I>    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i=0; i&lt;6; ++i) fill(p[i][0], p[i][n], 0); <I><FONT COLOR="#B22222">//initize all view as non removed
+</FONT></I>    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i=0; i&lt;n; ++i) fill(g[i][0], g[i][n], -1); <I><FONT COLOR="#B22222">//initize all cubics not exist
+</FONT></I>    <I><FONT COLOR="#B22222">// fill(g[0][0], g[n][0], -1);
+</FONT></I>    <B><FONT COLOR="#A020F0">while</FONT></B> (true) {
+       <B><FONT COLOR="#228B22">bool</FONT></B> quit=true;
+       <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i=0; i&lt;6; i++) <B><FONT COLOR="#A020F0">if</FONT></B>(update(i)) quit=false;
+       <B><FONT COLOR="#A020F0">if</FONT></B>(quit) <B><FONT COLOR="#A020F0">break</FONT></B>;
+    }
+    <B><FONT COLOR="#228B22">int</FONT></B> ans=n*n*n; <I><FONT COLOR="#B22222">// init weight for perfect cubic
+</FONT></I>    <B><FONT COLOR="#A020F0">for</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> i=0; i&lt;n; ++i) <B><FONT COLOR="#A020F0">for</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> j=0; j&lt;n; ++j) <B><FONT COLOR="#A020F0">for</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> k=0; k&lt;n; ++k)
+      <B><FONT COLOR="#A020F0">if</FONT></B>(g[i][j][k]==0) --ans; <I><FONT COLOR="#B22222">// if the cubic at position[i][j][k] does not exit, remove this weight
+</FONT></I>    printf(<B><FONT COLOR="#BC8F8F">&quot;Maximum weight: %d gram(s)\n&quot;</FONT></B>, ans);
+  }
+  <B><FONT COLOR="#A020F0">return</FONT></B> 0;
+}
+</PRE>
+<HR>
+<A NAME="file2">
+<H1>/Users/wujibang/Developer/Algorithm/uvaicpc/code/WorldFinal/2004/intersecting_dates.cpp 2/3</H1>
+[<A HREF="#top">top</A>][<A HREF="#file1">prev</A>][<A HREF="#file3">next</A>]
+<PRE>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;stdio.h&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;vector&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;stdlib.h&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;unordered_map&gt;</FONT></B>
+using namespace std;
+
+<I><FONT COLOR="#B22222">// there are at most 147000 different days between 1700 and 2100
+</FONT></I>#<B><FONT COLOR="#5F9EA0">define</FONT></B> <FONT COLOR="#B8860B">MAX_DATE</FONT> 147000
+
+<I><FONT COLOR="#B22222">// keep track of the case number (needed for output)
+</FONT></I><B><FONT COLOR="#228B22">static</FONT></B> <B><FONT COLOR="#228B22">int</FONT></B> caseNum = 1;
+
+<I><FONT COLOR="#B22222">// records which dates are valid dates for our output
+</FONT></I><B><FONT COLOR="#228B22">bool</FONT></B> dates[MAX_DATE];
+
+<I><FONT COLOR="#B22222">// &quot;itod&quot; (Index to Date): given a specific index for &quot;dates&quot;,
+</FONT></I><I><FONT COLOR="#B22222">// returns the associated calendar date for this index
+</FONT></I><B><FONT COLOR="#228B22">int</FONT></B> itod[MAX_DATE];
+
+<I><FONT COLOR="#B22222">// &quot;dtoi&quot; (Date to Index): given a date in calendar,
+</FONT></I><I><FONT COLOR="#B22222">// returns the index it is represented in our &quot;dates&quot; array
+</FONT></I><I><FONT COLOR="#B22222">// **This is exactly the reverse of &quot;itod&quot;;
+</FONT></I><I><FONT COLOR="#B22222">// it has to be stored as unordered_map,
+</FONT></I><I><FONT COLOR="#B22222">// since 21001231 exceeds the max memory size for an array
+</FONT></I>unordered_map&lt;<B><FONT COLOR="#228B22">int</FONT></B>, <B><FONT COLOR="#228B22">int</FONT></B>&gt; dtoi;
+
+<I><FONT COLOR="#B22222">// given an integer between 17000101 and 21001231,
+</FONT></I><I><FONT COLOR="#B22222">// returns whether this integer is a valid date in calendar
+</FONT></I><B><FONT COLOR="#228B22">bool</FONT></B> <B><FONT COLOR="#0000FF">isCorrectDate</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> date) {
+    <B><FONT COLOR="#228B22">int</FONT></B> y = date / 10000, m = (date%10000) / 100, d = date % 100;
+    <B><FONT COLOR="#A020F0">if</FONT></B> (m == 0 || m &gt; 12) <B><FONT COLOR="#A020F0">return</FONT></B> false;
+    <B><FONT COLOR="#A020F0">if</FONT></B> (d == 0 || d &gt; 31) <B><FONT COLOR="#A020F0">return</FONT></B> false;
+    <B><FONT COLOR="#A020F0">if</FONT></B> (d==31 &amp;&amp; (m==4 || m==6 || m==9 || m==11)) <B><FONT COLOR="#A020F0">return</FONT></B> false;
+    <B><FONT COLOR="#A020F0">if</FONT></B> (m == 2) {
+        <B><FONT COLOR="#A020F0">if</FONT></B> (y%4 == 0 &amp;&amp; (y%100 != 0 || y%400 == 0)) <B><FONT COLOR="#A020F0">return</FONT></B> d &lt;= 29;
+        <B><FONT COLOR="#A020F0">else</FONT></B> <B><FONT COLOR="#A020F0">return</FONT></B> d &lt;= 28;
+    }
+    <B><FONT COLOR="#A020F0">return</FONT></B> true;
+}
+
+<I><FONT COLOR="#B22222">// pre-generate &quot;itod&quot; and &quot;dtoi&quot; for all possible dates
+</FONT></I><B><FONT COLOR="#228B22">void</FONT></B> <B><FONT COLOR="#0000FF">genMaps</FONT></B>() {
+    <B><FONT COLOR="#228B22">int</FONT></B> ind = 0;
+    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i = 17000101; i &lt;= 21001231; i++) {
+        <B><FONT COLOR="#A020F0">if</FONT></B> (!isCorrectDate(i)) <B><FONT COLOR="#A020F0">continue</FONT></B>;
+        itod[ind++] = i;
+        dtoi[i] = ind-1;
+    }
+}
+
+<I><FONT COLOR="#B22222">// given two dates &quot;start&quot; and &quot;end&quot; (possibly the same),
+</FONT></I><I><FONT COLOR="#B22222">// prints the output in the correct format to stdout
+</FONT></I><B><FONT COLOR="#228B22">void</FONT></B> <B><FONT COLOR="#0000FF">printOutput</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> start, <B><FONT COLOR="#228B22">int</FONT></B> end) {
+    <B><FONT COLOR="#228B22">int</FONT></B> y1 = start / 10000, m1 = (start%10000) / 100, d1 = start%100;
+    <B><FONT COLOR="#228B22">int</FONT></B> y2 = end / 10000, m2 = (end%10000) / 100, d2 = end%100;
+    <B><FONT COLOR="#A020F0">if</FONT></B> (start == end) <I><FONT COLOR="#B22222">// required to print only one date
+</FONT></I>        printf(<B><FONT COLOR="#BC8F8F">&quot;    %d/%d/%d\n&quot;</FONT></B>, m1, d1, y1);
+    <B><FONT COLOR="#A020F0">else</FONT></B>
+        printf(<B><FONT COLOR="#BC8F8F">&quot;    %d/%d/%d to %d/%d/%d\n&quot;</FONT></B>, m1, d1, y1, m2, d2, y2);
+}
+
+<I><FONT COLOR="#B22222">// main part of the solution
+</FONT></I><B><FONT COLOR="#228B22">void</FONT></B> <B><FONT COLOR="#0000FF">solve</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> b, <B><FONT COLOR="#228B22">int</FONT></B> a) {
+    printf(<B><FONT COLOR="#BC8F8F">&quot;Case %d:\n&quot;</FONT></B>, caseNum);
+
+    <I><FONT COLOR="#B22222">// reads all dates whose data have been previously retrieved
+</FONT></I>    <I><FONT COLOR="#B22222">// and store them in a vector (we need these data later)
+</FONT></I>    vector&lt;<B><FONT COLOR="#228B22">int</FONT></B>&gt; dates1, dates2;
+    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i = 0; i &lt; b; i++) {
+        <B><FONT COLOR="#228B22">int</FONT></B> d1, d2; scanf(<B><FONT COLOR="#BC8F8F">&quot;%d %d\n&quot;</FONT></B>, &amp;d1, &amp;d2);
+        dates1.push_back(d1);
+        dates2.push_back(d2);
+    }
+
+    <I><FONT COLOR="#B22222">// reads all remaining dates whose data are to be retrieved
+</FONT></I>    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i = 0; i &lt; a; i++) {
+        <B><FONT COLOR="#228B22">int</FONT></B> d1, d2; scanf(<B><FONT COLOR="#BC8F8F">&quot;%d %d\n&quot;</FONT></B>, &amp;d1, &amp;d2);
+        <I><FONT COLOR="#B22222">// these dates are required for output; set them to true
+</FONT></I>        fill(dates+dtoi[d1], dates+dtoi[d2]+1, true);
+    }
+
+    <B><FONT COLOR="#A020F0">for</FONT></B> (<B><FONT COLOR="#228B22">int</FONT></B> i = 0; i &lt; b; i++) {
+        <I><FONT COLOR="#B22222">// these dates have been previously retrieved (no longer needed)
+</FONT></I>        fill(dates+dtoi[dates1[i]], dates+dtoi[dates2[i]]+1, false);
+    }
+
+    <I><FONT COLOR="#B22222">// iterate over all possible dates to get desired time intervals
+</FONT></I>    <B><FONT COLOR="#228B22">int</FONT></B> i = 0;
+    <B><FONT COLOR="#228B22">bool</FONT></B> need = false;
+    <B><FONT COLOR="#A020F0">while</FONT></B> (i &lt;= dtoi[21001231]) {
+        <B><FONT COLOR="#A020F0">if</FONT></B> (dates[i]) {
+            <B><FONT COLOR="#228B22">int</FONT></B> start = itod[i];
+            <B><FONT COLOR="#A020F0">while</FONT></B> (dates[++i]); <I><FONT COLOR="#B22222">// scan for the end of this interval
+</FONT></I>            <B><FONT COLOR="#228B22">int</FONT></B> end = itod[i-1];
+            printOutput(start, end);
+
+            <I><FONT COLOR="#B22222">// the &quot;no quotes&quot; message should no longer be displayed
+</FONT></I>            need = true;
+        } <B><FONT COLOR="#A020F0">else</FONT></B>
+            i++;
+    }
+
+    <I><FONT COLOR="#B22222">// no dates are required, print the corresponding message
+</FONT></I>    <B><FONT COLOR="#A020F0">if</FONT></B> (!need) printf(<B><FONT COLOR="#BC8F8F">&quot;    No additional quotes are required.\n&quot;</FONT></B>);
+}
+
+<B><FONT COLOR="#228B22">int</FONT></B> <B><FONT COLOR="#0000FF">main</FONT></B>() {
+    genMaps();
+
+    <B><FONT COLOR="#228B22">bool</FONT></B> need = false;
+    <B><FONT COLOR="#A020F0">for</FONT></B> (;;) {
+        <I><FONT COLOR="#B22222">// the array &quot;dates&quot; need to be initialized as false everywhere
+</FONT></I>        fill(dates, dates+MAX_DATE, false);
+
+        <I><FONT COLOR="#B22222">// read input
+</FONT></I>        <B><FONT COLOR="#228B22">int</FONT></B> b, a; scanf(<B><FONT COLOR="#BC8F8F">&quot;%d %d\n&quot;</FONT></B>, &amp;b, &amp;a);
+
+        <I><FONT COLOR="#B22222">// check if we reach the end of test file
+</FONT></I>        <B><FONT COLOR="#A020F0">if</FONT></B> (b == 0 &amp;&amp; a == 0) <B><FONT COLOR="#A020F0">break</FONT></B>;
+
+        <I><FONT COLOR="#B22222">// keep track of line feeds between cases
+</FONT></I>        <B><FONT COLOR="#A020F0">if</FONT></B> (!need) need = true;
+        <B><FONT COLOR="#A020F0">else</FONT></B> printf(<B><FONT COLOR="#BC8F8F">&quot;\n&quot;</FONT></B>);
+
+        solve(b, a);
+        caseNum++;
+    }
+
+    <B><FONT COLOR="#A020F0">return</FONT></B> 0;
+}
+</PRE>
+<HR>
+<A NAME="file3">
+<H1>/Users/wujibang/Developer/Algorithm/uvaicpc/code/WorldFinal/2004/Tree-lined_street.cpp 3/3</H1>
+[<A HREF="#top">top</A>][<A HREF="#file2">prev</A>][next]
+<PRE>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;stdio.h&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;math.h&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;iostream&gt;</FONT></B>
+#<B><FONT COLOR="#5F9EA0">include</FONT></B> <B><FONT COLOR="#BC8F8F">&lt;algorithm&gt;</FONT></B>
+using namespace std;
+<B><FONT COLOR="#228B22">struct</FONT></B> line {               <I><FONT COLOR="#B22222">//line structure with two points (x1,y1) (x2,y2)
+</FONT></I>  <B><FONT COLOR="#228B22">int</FONT></B> x1,y1,x2,y2;
+};
+
+<B><FONT COLOR="#228B22">int</FONT></B> cases,n,ans,s,i,j,k;    <I><FONT COLOR="#B22222">//global variables
+</FONT></I><I><FONT COLOR="#B22222">// cases : case number    n : number of lines   ans : output
+</FONT></I><I><FONT COLOR="#B22222">// s : number of intersections on one certain line    i, j, k: temporary variables  
+</FONT></I>
+line a[110];                <I><FONT COLOR="#B22222">//record lines
+</FONT></I><B><FONT COLOR="#228B22">double</FONT></B> b[200];              <I><FONT COLOR="#B22222">//record each intersection on one line by its distance to the origin
+</FONT></I><B><FONT COLOR="#228B22">double</FONT></B> len;
+<B><FONT COLOR="#228B22">bool</FONT></B> <B><FONT COLOR="#0000FF">check</FONT></B>(<B><FONT COLOR="#228B22">int</FONT></B> x1,<B><FONT COLOR="#228B22">int</FONT></B> y1,<B><FONT COLOR="#228B22">int</FONT></B> x2,<B><FONT COLOR="#228B22">int</FONT></B> y2,<B><FONT COLOR="#228B22">int</FONT></B> x3,<B><FONT COLOR="#228B22">int</FONT></B> y3) {  <I><FONT COLOR="#B22222">//check if p(x1,y1)(x2,y2) is at the clock-wise side of p(x1,y1)(x3,y3)                                                       //used for determining if two lines intersect
+</FONT></I>   <B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B> t1,t2;
+   t1=(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)x1*(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)y2-(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)x2*(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)y1;
+   t2=(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)x1*(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)y3-(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)x3*(<B><FONT COLOR="#228B22">long</FONT></B> <B><FONT COLOR="#228B22">long</FONT></B>)y1;
+   <B><FONT COLOR="#A020F0">return</FONT></B>((t1&gt;=0&amp;&amp;t2&lt;=0)||(t1&lt;=0&amp;&amp;t2&gt;=0));
+}
+
+<B><FONT COLOR="#228B22">bool</FONT></B> <B><FONT COLOR="#0000FF">intersect</FONT></B>(line A, line B) {                        <I><FONT COLOR="#B22222">//check if two points are on the different side of one line and vice versa, if both so they intersect
+</FONT></I>  <B><FONT COLOR="#A020F0">return</FONT></B> (check(A.x2-A.x1,A.y2-A.y1,B.x1-A.x1,B.y1-A.y1, B.x2-A.x1,B.y2-A.y1)
+  &amp;&amp; check(B.x2-B.x1,B.y2-B.y1,A.x1-B.x1,A.y1-B.y1, A.x2-B.x1,A.y2-B.y1));
+}
+
+<B><FONT COLOR="#228B22">double</FONT></B> <B><FONT COLOR="#0000FF">dis</FONT></B>(<B><FONT COLOR="#228B22">double</FONT></B> x,<B><FONT COLOR="#228B22">double</FONT></B> y) { <I><FONT COLOR="#B22222">//distance between one node to the origin
+</FONT></I>   <B><FONT COLOR="#A020F0">return</FONT></B> sqrt(x*x+y*y);
+}
+
+<B><FONT COLOR="#228B22">void</FONT></B> <B><FONT COLOR="#0000FF">cross</FONT></B>(line A,line B) { <I><FONT COLOR="#B22222">//for every two lines determine if they intersect, if so update b and s
+</FONT></I>   <B><FONT COLOR="#228B22">double</FONT></B> A1,B1,C1,A2,B2,C2,x,y;
+   A1=A.y2-A.y1;B1=A.x1-A.x2;C1 = -(A.x1*A1 + A.y1*B1);
+   A2=B.y2-B.y1; B2=B.x1-B.x2; C2 =-(B.x1*A2+B.y1*B2);
+   x=-(C1*B2-C2*B1) / (A1*B2-A2*B1);
+   y=-(A1*C2-A2*C1) / (A1*B2-A2*B1);
+   <B><FONT COLOR="#228B22">double</FONT></B> l = dis(x-A.x1,y-A.y1);
+   <B><FONT COLOR="#A020F0">if</FONT></B> (isfinite(l) &amp;&amp; l &lt; dis(A.x2-A.x1,A.y2-A.y1) ) {b[s] = l;}
+}
+
+<B><FONT COLOR="#228B22">bool</FONT></B> <B><FONT COLOR="#0000FF">init</FONT></B>() { <I><FONT COLOR="#B22222">//initiate and input data to the global variable, if get 0 end
+</FONT></I>   <B><FONT COLOR="#228B22">int</FONT></B> i;
+   scanf(<B><FONT COLOR="#BC8F8F">&quot;%d&quot;</FONT></B>,&amp;n);
+   <B><FONT COLOR="#A020F0">if</FONT></B>(n==0)
+   <B><FONT COLOR="#A020F0">return</FONT></B> false;
+   <B><FONT COLOR="#A020F0">for</FONT></B>(i=1;i&lt;=n;i++)
+    scanf(<B><FONT COLOR="#BC8F8F">&quot;%d %d %d %d&quot;</FONT></B>, &amp;a[i].x1,&amp;a[i].y1,&amp;a[i].x2,&amp;a[i].y2);
+   <B><FONT COLOR="#A020F0">return</FONT></B> true;
+}
+
+<B><FONT COLOR="#228B22">int</FONT></B> <B><FONT COLOR="#0000FF">main</FONT></B>() {
+   cases=0;
+   <B><FONT COLOR="#A020F0">while</FONT></B>(init()) {
+    ans=0;
+    <B><FONT COLOR="#A020F0">for</FONT></B>(i=1;i&lt;=n;i++){
+      s = 2;
+      b[1]=-25; b[2]=dis(a[i].x2-a[i].x1,a[i].y2-a[i].y1)+25;   <I><FONT COLOR="#B22222">//mark two end point 25m further so they can be viewed as intersections
+</FONT></I>      <B><FONT COLOR="#A020F0">for</FONT></B>(j=1;j&lt;=n;j++)
+        <B><FONT COLOR="#A020F0">if</FONT></B>(i!=j) <I><FONT COLOR="#B22222">//if two lines are the same skip
+</FONT></I>        <B><FONT COLOR="#A020F0">if</FONT></B>(intersect(a[i], a[j])) { <I><FONT COLOR="#B22222">//if two lines intersect
+</FONT></I>          s++;cross(a[i],a[j]); <I><FONT COLOR="#B22222">//increase the number of intersections (s), and call cross to update b
+</FONT></I>        }
+      sort(b+1, b+s+1); <I><FONT COLOR="#B22222">//sort b so that all nodes are arranged in order
+</FONT></I>      <B><FONT COLOR="#A020F0">for</FONT></B>(j = 1; j &lt; s ; j++) { <I><FONT COLOR="#B22222">// for each segments the max number of trees to be planted was [l/50] (lower bound)
+</FONT></I>        len = b[j+1] - b[j];
+        k = (<B><FONT COLOR="#228B22">int</FONT></B>)(len/50);
+        ans+=k; <I><FONT COLOR="#B22222">//add to the output
+</FONT></I>      }
+    }
+    printf(<B><FONT COLOR="#BC8F8F">&quot;Map %d\nTrees = %d\n&quot;</FONT></B>,++cases,ans);
+  }
+}
+</PRE>
+<HR>
+<ADDRESS>Generated by <A HREF="http://www.iki.fi/~mtr/genscript/">GNU Enscript 1.6.6</A>.</ADDRESS>
+</BODY>
+</HTML>
